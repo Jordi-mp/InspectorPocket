@@ -17,7 +17,10 @@ class Featurizer:
             atom_features = self._extract_atom_features(atom)
             features.append(atom_features)
         
-        return np.array(features)
+        # Extract coordinates
+        coords = mol.coords
+        
+        return coords, np.array(features)
     
     def _extract_atom_features(self, atom):
         # Example: Extracting atom type (atomic number)
