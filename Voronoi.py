@@ -1,6 +1,8 @@
 import numpy as np
-from scipy.spatial import Voronoi
-from Bio.PDB import PDBParser, NeighborSearch
+from scipy.spatial import Voronoi, ConvexHull
+from Bio.PDB import PDBParser
+from sklearn.cluster import DBSCAN
+from Bio.PDB.SASA import ShrakeRupley
 import sys
 
 def pdb_file_prep(pdb_file):
@@ -13,56 +15,64 @@ def pdb_file_prep(pdb_file):
         for chain in model:
             for residue in chain:
                 if residue.id[0] == ' ':
-                    residues.append(residue['CA'].get_coord())
+                    residues.append(residue)
     return structure, residues
-
-"""def get_accesibility(pdb_file):
-    #Calculates the solvent accessibility of each residue in a protein structure by calculating solvent-accessible surface area.
-    structure, residues = pdb_file_prep(pdb_file)
-    neighbors = NeighborSearch(residues)
-    accessibility = calc_surface_area(structure, neighbors)
-    return accessibility"""
 
 def get_voronoi(pdb_file):
     """Creates a Voronoi diagram from the alpha carbon atoms of the entire protein structure."""
     structure, residues = pdb_file_prep(pdb_file)
-    voronoi = Voronoi(residues)
+    CA_atoms = [residue['CA'].get_coord() for residue in residues]
+    voronoi = Voronoi(CA_atoms)
     return voronoi
 
-def get_voronoi_volumes(voronoi):
+"""def get_voronoi_volumes(voronoi):
     #Calculates the volume of each Voronoi cell.
-    volumes = []
-    for i, region in enumerate(voronoi.regions):
-        if not -1 in region:
-            indices = voronoi.regions[i]
-            volumes.append(voronoi.volume(indices))
-    return volumes
+    cell_volumes = []
+    for region_index in range(len(voronoi.regions)):
+        region = voronoi.regions[region_index]
+        if -1 in region:
+            continue
+        vertices = np.array([voronoi.vertices[i] for i in region])
+        if len(vertices) >= 3:
+            volume = ConvexHull(vertices).volume
+            cell_volumes.append(volume)
+    return cell_volumes
 
-"""def detect_cavities(voronoi, pdb_file):
-    #Detects the cavities in the protein structure based on the Voronoi cell volumes and accessibility.
-    volumes = get_voronoi_volumes(voronoi)
-    accessibility = get_accesibility(pdb_file)
-    cavities = []
-    # Thresholds for cavity detection: one for volume one for accessibility
-    # Integration of both metrics
-    # Rank the cavities based on the integrated metric
-    return cavities"""
+def normalize(cell_volumes):
+    return (cell_volumes - np.min(cell_volumes)) / (np.max(cell_volumes) - np.min(cell_volumes))"""
 
-def access_voronoi_data(voronoi):
-    p = voronoi.points
-    v = voronoi.vertices
-    r = voronoi.regions
-    ridgep = voronoi.ridge_points
-    ridgev = voronoi.ridge_vertices
-    pointr = voronoi.point_region
-    return p, v, r, ridgep, ridgev, pointr
+def cluster_vertices(voronoi):
+    """Clusters the Voronoi cells with DBSCAN clustering algorithm."""
+    dbscan = DBSCAN(eps=0.5, min_samples=2)
+    labels = dbscan.fit_predict(voronoi.vertices)
+    return labels
+
+def get_cluster_centroids(voronoi, labels):
+    """Calculates the centroids of the clusters."""
+    n_clusters = np.max(labels) + 1
+    centroids = np.zeros((n_clusters, voronoi.vertices.shape[1]))
+    for i in range(n_clusters):
+        cluster_vertices = voronoi.vertices[labels == i]
+        centroids[i] = np.mean(cluster_vertices, axis=0)
+    return centroids
+
+def cluster_centroids(centroids):
+    """Clusters the centroids of the Voronoi cells with DBSCAN clustering algorithm."""
+    dbscan = DBSCAN(eps=1, min_samples=2)
+    refined_labels = dbscan.fit_predict(centroids)
+    return refined_labels
+
+"""def get_accesibility(pdb_file):
+    #Calculates the solvent accessibility of each residue in a protein structure by calculating solvent-accessible surface area.
+    structure, _ = pdb_file_prep(pdb_file)
+    accessibility = ShrakeRupley(probe_radius=1.4)
+    accessibility.compute(structure, level='R')
+    print(round(structure.sasa, 2))
+    return accessibility"""
 
 if __name__ == '__main__':
     pdb_file = sys.argv[1]
     voronoi = get_voronoi(pdb_file)
-    print(f"voronoi points: {voronoi.points}\n"
-          f"voronoi vertices: {voronoi.vertices}\n"
-          f"voronoi regions: {voronoi.regions}\n"
-          f"voronoi ridge points: {voronoi.ridge_points}\n"
-          f"voronoi ridge vertices: {voronoi.ridge_vertices}\n"
-          f"voronoi point region: {voronoi.point_region}")
+    cluster_labels = cluster_vertices(voronoi)
+    refined_labels = cluster_centroids(get_cluster_centroids(voronoi, cluster_labels))
+    print(refined_labels)
