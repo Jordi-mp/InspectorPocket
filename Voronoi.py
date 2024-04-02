@@ -2,7 +2,6 @@ import numpy as np
 from scipy.spatial import Voronoi, ConvexHull
 from Bio.PDB import PDBParser
 from sklearn.cluster import DBSCAN
-from Bio.PDB.SASA import ShrakeRupley
 import sys
 
 def pdb_file_prep(pdb_file):
@@ -25,7 +24,18 @@ def get_voronoi(pdb_file):
     voronoi = Voronoi(CA_atoms)
     return voronoi
 
-"""def get_voronoi_volumes(voronoi):
+def get_voronoi_vetrices(voronoi):
+    return voronoi.vertices
+
+def get_atomic_neighbors(voronoi):
+    neighbors = voronoi.ridge_points
+    return neighbors
+
+def get_vertex_neighbors(voronoi):
+    vertex_neighbors = voronoi.ridge_vertices
+    return vertex_neighbors
+
+def get_voronoi_volumes(voronoi):
     #Calculates the volume of each Voronoi cell.
     cell_volumes = []
     for region_index in range(len(voronoi.regions)):
@@ -38,17 +48,17 @@ def get_voronoi(pdb_file):
             cell_volumes.append(volume)
     return cell_volumes
 
-def normalize(cell_volumes):
+"""def normalize(cell_volumes):
     return (cell_volumes - np.min(cell_volumes)) / (np.max(cell_volumes) - np.min(cell_volumes))"""
 
-def cluster_vertices(voronoi):
-    """Clusters the Voronoi cells with DBSCAN clustering algorithm."""
+"""def cluster_vertices(voronoi):
+    #Clusters the Voronoi cells with DBSCAN clustering algorithm.
     dbscan = DBSCAN(eps=0.5, min_samples=2)
     labels = dbscan.fit_predict(voronoi.vertices)
     return labels
 
 def get_cluster_centroids(voronoi, labels):
-    """Calculates the centroids of the clusters."""
+    #Calculates the centroids of the clusters.
     n_clusters = np.max(labels) + 1
     centroids = np.zeros((n_clusters, voronoi.vertices.shape[1]))
     for i in range(n_clusters):
@@ -57,22 +67,16 @@ def get_cluster_centroids(voronoi, labels):
     return centroids
 
 def cluster_centroids(centroids):
-    """Clusters the centroids of the Voronoi cells with DBSCAN clustering algorithm."""
+    #Clusters the centroids of the Voronoi cells with DBSCAN clustering algorithm.
     dbscan = DBSCAN(eps=1, min_samples=2)
     refined_labels = dbscan.fit_predict(centroids)
-    return refined_labels
-
-"""def get_accesibility(pdb_file):
-    #Calculates the solvent accessibility of each residue in a protein structure by calculating solvent-accessible surface area.
-    structure, _ = pdb_file_prep(pdb_file)
-    accessibility = ShrakeRupley(probe_radius=1.4)
-    accessibility.compute(structure, level='R')
-    print(round(structure.sasa, 2))
-    return accessibility"""
+    return refined_labels"""
 
 if __name__ == '__main__':
     pdb_file = sys.argv[1]
     voronoi = get_voronoi(pdb_file)
-    cluster_labels = cluster_vertices(voronoi)
-    refined_labels = cluster_centroids(get_cluster_centroids(voronoi, cluster_labels))
-    print(refined_labels)
+    get_voronoi_vetrices(voronoi)
+    get_atomic_neighbors(voronoi)
+    get_vertex_neighbors(voronoi)
+    get_voronoi_volumes(voronoi)
+
