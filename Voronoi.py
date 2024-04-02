@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.spatial import Voronoi, ConvexHull
+from scipy.spatial import Voronoi, ConvexHull, distance
 from Bio.PDB import PDBParser
 from sklearn.cluster import DBSCAN
 import sys
@@ -72,6 +72,19 @@ def cluster_centroids(centroids):
     refined_labels = dbscan.fit_predict(centroids)
     return refined_labels"""
 
+def calculate_pocket_centers(voronoi):
+    """Calculate the geometric center of each pocket."""
+    pocket_centers = []
+    for region in voronoi.regions:
+        if -1 in region or len(region) < 3:
+            continue
+        pocket_vertices = voronoi.vertices[region]
+        pocket_center = np.mean(pocket_vertices, axis=0)
+        pocket_centers.append(pocket_center)
+    return np.array(pocket_centers)
+
+calculate_pocket_centers(get_voronoi('test.pdb'))
+
 if __name__ == '__main__':
     pdb_file = sys.argv[1]
     voronoi = get_voronoi(pdb_file)
@@ -79,4 +92,5 @@ if __name__ == '__main__':
     get_atomic_neighbors(voronoi)
     get_vertex_neighbors(voronoi)
     get_voronoi_volumes(voronoi)
+    print("Identified Binding Sites:", binding_sites)
 
