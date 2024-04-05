@@ -41,7 +41,7 @@ class ProcessPocket:
             print("Identifying pockets..."), self.get_buried_cells()
             print("Pockets identified.")
             self.clustering(self.inv_transform_matrix)
-            print("Identifying residues in the vecinity of each pocket."), self.pocket_description()
+            print("Identifying residues in the vicinity of each pocket."), self.pocket_description()
             print("Pocket residues identified.")
         else:
             print("Error initializing the grid.")
