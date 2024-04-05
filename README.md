@@ -27,8 +27,17 @@ These steps will download the repository, install any necessary dependencies, an
 
 
 ---
+### Commands
+usage: InspectorPocket.py [-h] [-l {pdb_file}] [-o ] 
 
+InspectorPocket.py is a Python script designed to predict ligand binding pockets of proteins from their .pdb files.
 
+optional arguments:
+  -h, --help     show this help message and exit
+  -l {pdb_file}, --local {pdb_file}     Analyze a local .pdb file.
+  -o , --online     Fetch a .pdb file from the RCSB PDB server and analyze it. Initiate the process by entering the PDB code when prompted in the terminal.
+
+---
 ### Tutorial: Analyzing a PDB File with InspectorPocket.py
 
 In this tutorial, we will explore how to analyze a Protein Data Bank (PDB) file using InspectorPocket.py. This tool helps identify binding pockets within protein structures, aiding in understanding their functional significance.
