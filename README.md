@@ -1,5 +1,5 @@
-#INSPECTOR POCKET
-Welcome to our github repository InspectorPocket!
+INSPECTOR POCKET
+Welcome to our GitHub repository for InspectorPocket!
 
 InspectorPocket.py is a Python script designed to predict ligand binding pockets of proteins from their .pdb files.
 
