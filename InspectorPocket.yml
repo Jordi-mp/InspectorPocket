@@ -1,0 +1,11 @@
+name: InspectorPocket
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - biopython
+  - requests
+  - scipy
+  - setuptools
