@@ -201,7 +201,7 @@ color gray50
                 for line in f:
                     if line.startswith('ATOM'):
                         parts = line.split()
-                        atom_type_index = parts.index('COO')
+                        atom_type_index = parts.index('POK')
                         pocket_number = int(parts[atom_type_index + 1])
                         x = float(line[30:38])
                         y = float(line[38:46])
