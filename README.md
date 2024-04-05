@@ -41,6 +41,22 @@ Optional arguments:
 - `-l {pdb_file}`, `--local {pdb_file}`: Analyze a local .pdb file.
 - `-o`, `--online`: Fetch a .pdb file from the RCSB PDB server and analyze it. Initiate the process by entering the PDB code when prompted in the terminal.
 
+---
+### Output files
+**Detected Pockets in PDB Format:**
+Pockets are identified and saved individually in PDB format files labeled as `PDBcode_pocketX.pdb`, where 'X' represents the pocket number. Each pocket is defined in the residue name as POK. Moreover, the residue sequence number corresponds to the number of the pocket, which is useful to separately identify each binding site in PyMOL.
+
+**Single Document Containing All Pockets:**
+All detected pockets are consolidated into a single document named `PDBcode_all_pockets.pdb`, streamlining access and management of the pocket data.
+
+**PyMOL Script for Visualization:**
+A PyMOL script named `visualize_pymol.pml` is provided, facilitating direct visualization of the PDB structure along with its detected pockets represented as surfaces in PyMOL, a molecular visualization software.
+
+**Chimera Script for Visualization:**
+A Chimera script titled `visualize_chimera.cmd` is included, enabling direct visualization of the PDB structure along with its detected pockets in Chimera, another molecular visualization tool.
+
+**Pocket Report:**
+A text file named `pocket_report.txt` is provided, containing a comprehensive list of residues involved in each detected pocket.
 
 ---
 ### Tutorial: Analyzing a PDB File with InspectorPocket.py
