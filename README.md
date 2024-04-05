@@ -26,6 +26,7 @@ $ pip install dist/InspectorPocket-1.0.tar.gz
 These steps will download the repository, install any necessary dependencies, and set up InspectorPocket for use on your system.
 
 
+---
 
 
 ### Tutorial: Analyzing a PDB File with InspectorPocket.py
