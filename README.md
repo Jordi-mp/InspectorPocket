@@ -63,7 +63,7 @@ When analyzing a PDB file in local mode, we utilize a locally stored PDB file fo
    $ InspectorPocket.py -l 2rh1.pdb
    ```
 
-4. **Check Terminal Output:** InspectorPocket will identify pockets and output relevant information in the terminal.
+4. **Check Output:** InspectorPocket will identify pockets and output relevant information inside an output directory.
 
 5. **Navigate to Output Directory:** Move to the newly created directory containing InspectorPocket outputs.
    ```bash
