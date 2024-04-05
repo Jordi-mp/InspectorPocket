@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='InspectorPocket',
     version='1.0',
-    py_modules=['FileOps', 'GetOnline_PDB', 'Grid', 'IteratePockets', 'ProcessPocket', 'Protein'],
+    py_modules=['FileOps', 'GetOnline_PDB', 'Grid', 'IteratePockets', 'FindPockets', 'Protein'],
     scripts=['InspectorPocket.py'],
     install_requires=['Bio==1.6.2', 
                       'biopython==1.83', 
