@@ -27,6 +27,7 @@ These steps will download the repository, install any necessary dependencies, an
 
 
 
+
 ### Tutorial: Analyzing a PDB File with InspectorPocket.py
 
 In this tutorial, we will explore how to analyze a Protein Data Bank (PDB) file using InspectorPocket.py. This tool helps identify binding pockets within protein structures, aiding in understanding their functional significance.
@@ -37,12 +38,22 @@ When analyzing a PDB file in local mode, we utilize a locally stored PDB file fo
 1. **Download the PDB File:** Obtain the structure of the protein in PDB format from the Protein Data Bank (PDB). For example, we'll use the crystal structure of human Beta-2 Adrenergic G protein-coupled receptor (PDB ID: 2RH1).
 
 2. **Move PDB File:** Create a new directory and move the downloaded PDB file into it.
+   ```bash
+   $ mkdir Tutorial_InspectorPocket
+   $ mv 2rh1.pdb Tutorial_InspectorPocket
+   ```
 
 3. **Run InspectorPocket.py:** Execute InspectorPocket.py with the local mode option (-l) followed by the path to the PDB file.
+   ```bash
+   $ InspectorPocket.py -l 2rh1.pdb
+   ```
 
 4. **Check Terminal Output:** InspectorPocket will identify pockets and output relevant information in the terminal.
 
 5. **Navigate to Output Directory:** Move to the newly created directory containing InspectorPocket outputs.
+   ```bash
+   $ cd Tutorial_InspectorPocket
+   ```
 
 6. **Visualize in PyMOL or Chimera:** Open the visualization script provided in the directory using PyMOL or Chimera to visualize the protein structure with its detected pockets.
 
@@ -52,8 +63,14 @@ When analyzing a PDB file in local mode, we utilize a locally stored PDB file fo
 Alternatively, you can analyze a PDB file using InspectorPocket.py in online mode, where the PDB file is acquired from an online source.
 
 1. **Create Directory:** Create a new directory dedicated to the online mode analysis.
+   ```bash
+   $ mkdir Tutorial_InspectorPocket_Online
+   ```
 
 2. **Run InspectorPocket.py:** Execute InspectorPocket.py with the online mode option (-o) and follow the prompts to input the PDB ID.
+   ```bash
+   $ InspectorPocket.py -o
+   ```
 
 3. **Check Terminal Output:** InspectorPocket will download the PDB file, identify pockets, and provide output similar to the local mode.
 
