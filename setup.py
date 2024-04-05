@@ -20,7 +20,7 @@ if setup is not None:
     print("""
                  ^ ^                 
                 (O,O)                
-                (   ) Install successful! Enjoy using InspectorPocket!    
+                (   ) Setup successful! Enjoy using InspectorPocket!    
                 -"-"---------------------------------------------------""")
 else:
     print(f"An error occurred during installation.")
