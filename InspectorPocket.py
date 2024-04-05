@@ -154,20 +154,14 @@ util.chainbow('resname POK')
             os.chdir(output_directory)
 
             chimera_script = f"""
-open "{self.pdb}"
-preset apply pub 0
-surf
-color gray50
-
-open "{self.pdb}_pockets.pdb"
-POKtoggle style
-select resi {self.pdb[:-4]}:POK
+open {self.pdb}_pockets.pdb
 surface
 transparency 0.3
 color byhet
 
-center resname POK and resid 1 ; zoom center, 15
-color chain
+open {self.pdb}
+preset apply pub 0
+color gray50
 """
 
             with open(output_script_file, "w") as chimera_script_file:
