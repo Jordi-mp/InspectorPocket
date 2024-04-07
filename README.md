@@ -2,13 +2,16 @@
 <!-- LOGO -->
 <br />
 <div align="center">
-    <img src="image/inspector.jpg" alt="Logo" width="120" height="120">
+    <img src="Image/inspector.jpg" alt="Logo" width="644" height="400">
   </a>
 
 # INSPECTOR POCKET
+<div align="left">
+
 Welcome to our GitHub repository for **InspectorPocket**!
 
 InspectorPocket.py is a Python script designed to predict ligand binding pockets of proteins from their .pdb files.
+<div style="text-align: right; word-wrap: break-word;">
 
 ---
 ### Installation Instructions
