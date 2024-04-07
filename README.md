@@ -1,4 +1,10 @@
 
+<!-- LOGO -->
+<br />
+<div align="center">
+    <img src="images/image.jpg" alt="Logo" width="120" height="120">
+  </a>
+
 # INSPECTOR POCKET
 Welcome to our GitHub repository for **InspectorPocket**!
 
