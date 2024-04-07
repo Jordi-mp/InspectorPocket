@@ -2,7 +2,7 @@
 <!-- LOGO -->
 <br />
 <div align="center">
-    <img src="images/inspector.jpg" alt="Logo" width="120" height="120">
+    <img src="image/inspector.jpg" alt="Logo" width="120" height="120">
   </a>
 
 # INSPECTOR POCKET
